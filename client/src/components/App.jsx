@@ -5,7 +5,34 @@ import Chart from './Chart';
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { data: null };
+    this.state = {
+      data: {
+        labels: [],
+        datasets: [
+          {
+            label: 'Bitcoin',
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: 'rgba(255,153,0,0.4)',
+            borderColor: 'rgba(255,153,0,1)',
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: 'rgba(255,153,0,1)',
+            pointBackgroundColor: '#fff',
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: 'rgba(255,153,0,1)',
+            pointHoverBorderColor: 'rgba(255,153,0,1)',
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: []
+          }
+        ]
+      }
+    };
     this.getData = this.getData.bind(this);
   }
 
@@ -14,7 +41,14 @@ export default class App extends Component {
       .get(`https://api.coindesk.com/v1/bpi/historical/close.json`)
       .then(({ data }) => {
         data = data.bpi;
-        this.setState({ data });
+        const dates = Object.keys(data);
+        const vals = Object.values(data);
+        this.setState({
+          data: {
+            labels: dates,
+            datasets: [{ ...this.state.data.datasets[0], data: vals }]
+          }
+        });
       });
   }
 
@@ -23,10 +57,11 @@ export default class App extends Component {
   }
 
   render() {
-    return (
+    const { data } = this.state;
+    return data.labels.length ? (
       <React.Fragment>
-        <Chart />
+        <Chart data={data} />
       </React.Fragment>
-    );
+    ) : null;
   }
 }
