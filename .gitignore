@@ -1,0 +1,5 @@
+# bundle
+client/public/bundle.js
+
+# dependencies
+node_modules/
