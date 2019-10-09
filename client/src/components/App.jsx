@@ -24,9 +24,9 @@ export default class App extends Component {
             pointBorderWidth: 1,
             pointHoverRadius: 5,
             pointHoverBackgroundColor: 'rgba(255,153,0,1)',
-            pointHoverBorderColor: 'rgba(255,153,0,1)',
+            pointHoverBorderColor: 'rgba(255,153,0,0.5)',
             pointHoverBorderWidth: 2,
-            pointRadius: 1,
+            pointRadius: 5,
             pointHitRadius: 10,
             data: []
           }
